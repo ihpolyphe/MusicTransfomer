@@ -1,8 +1,8 @@
 # MusicTransfomer Setup
 # Environment
-OS: Windows11
-WSL2: 5.10.16.3-microsoft-standard-WSL2(Ubuntu 20.04)
-CPU: 11th Gen Intel(R) Core(TM) i7-11800H @ 2.30GHz   2.30 GHz
+OS: Windows11  
+WSL2: 5.10.16.3-microsoft-standard-WSL2(Ubuntu 20.04)  
+CPU: 11th Gen Intel(R) Core(TM) i7-11800H @ 2.30GHz   2.30 GHz  
 
 ## Install magenta On WSL2
 ```
