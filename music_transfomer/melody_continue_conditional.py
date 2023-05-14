@@ -15,11 +15,10 @@ from magenta.models.score2perf import score2perf
 import note_seq
 """
 入力midに対して続きを作曲するスクリプト
-!伴奏用のモデルのため使用してもいい感じのモデルは作れないよ
 """
 tf.disable_v2_behavior()
 # 出だしをインプット
-input_midi_path = "/mnt/c/Users/hayat/Desktop/myself/input_code/yorunikakeru/yorunikakeru_short.mid"
+input_midi_path = "<midi_path>"
 # モデルへ入力を渡す関数（generator）
 inputs = []
 decode_length = 0
@@ -41,8 +40,7 @@ def decode(ids, encoder):
 
 model_name = "transformer"  # モデル
 hparams_set = "transformer_tpu"  # ハイパーパラメータ
-# ckpt_path = 'gs://magentadata/models/music_transformer/checkpoints/melody_conditioned_model_16.ckpt'
-ckpt_path = "/mnt/c/Users/hayat/Desktop/myself/models/transfomer/melody_conditioned_model_16.ckpt"  # チェックポイント
+ckpt_path = "<checkpoint_path>"  # チェックポイント
 
 # エンコーダー生成用のクラス
 class MelodyToPianoPerformanceProblem(score2perf.AbsoluteMelody2PerfProblem):
@@ -82,22 +80,6 @@ predicted = estimator.predict(
 
 # 最初の推定結果は飛ばす
 next(predicted)
-
-# targets = []
-# decode_length = 1024
-
-# # 推定結果をidとして取得
-# predicted_ids = next(predicted)["outputs"]
-
-# # idをNoteSequenceに変換
-# midi_file = decode(
-#     predicted_ids,
-#     encoder=unconditional_encoders["targets"]
-#     )
-# unconditional_ns = note_seq.midi_file_to_note_sequence(midi_file)
-# note_seq.sequence_proto_to_midi_file(unconditional_ns, "music_transformer_composition_conditional.mid")  #MIDI　データに変換し保存
-
-
 
 input_midi = note_seq.midi_file_to_note_sequence(input_midi_path)
 # Handle sustain pedal in the primer.
@@ -148,5 +130,5 @@ ns = note_seq.midi_file_to_note_sequence(midi_filename)
 # Append continuation to primer.
 continuation_ns = note_seq.concatenate_sequences([primer_ns, ns])
 now = datetime.datetime.now()
-filename = "/mnt/c/Users/hayat/Desktop/myself/music_transfomer/result/conditional_generate_" + now.strftime('%Y_%m_%d_%H_%M_%S') + '.mid'
+filename = "result/conditional_generate_" + now.strftime('%Y_%m_%d_%H_%M_%S') + '.mid'
 note_seq.sequence_proto_to_midi_file(continuation_ns, filename)

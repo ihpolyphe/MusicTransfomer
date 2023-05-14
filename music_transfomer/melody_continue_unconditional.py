@@ -17,7 +17,7 @@ from magenta.models.gansynth.lib import util
 入力midに対して続きを作曲するスクリプト
 """
 # 出だしをインプット
-input_midi_path = "/mnt/c/Users/hayat/Desktop/myself/input_code/yorunikakeru_synse.mid"
+input_midi_path = "<midi_path>"
 
 tf.disable_v2_behavior()
 
@@ -42,9 +42,7 @@ def decode(ids, encoder):
 
 model_name = "transformer"  # モデル
 hparams_set = "transformer_tpu"  # ハイパーパラメータ
-ckpt_path = "/mnt/c/Users/hayat/Desktop/myself/models/transfomer/unconditional_model_16.ckpt"  # チェックポイント
-# ckpt_path = 'gs://magentadata/models/music_transformer/checkpoints/unconditional_model_16.ckpt'
-# ckpt_path = 'gs://magentadata/models/music_transformer/checkpoints/melody_conditioned_model_16.ckpt'
+ckpt_path = "<checkpoint_path>"  # チェックポイント
 # エンコーダー生成用のクラス
 class PianoPerformanceProblem(score2perf.Score2PerfProblem):
   @property
@@ -136,5 +134,5 @@ ns = note_seq.midi_file_to_note_sequence(midi_filename)
 # Append continuation to primer.
 continuation_ns = note_seq.concatenate_sequences([primer_ns, ns])
 now = datetime.datetime.now()
-filename = "/mnt/c/Users/hayat/Desktop/myself/music_transfomer/result/unconditional_generate_" + now.strftime('%Y_%m_%d_%H_%M_%S') + '.mid'
+filename = "result/unconditional_generate_" + now.strftime('%Y_%m_%d_%H_%M_%S') + '.mid'
 note_seq.sequence_proto_to_midi_file(continuation_ns, filename)

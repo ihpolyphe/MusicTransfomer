@@ -37,8 +37,7 @@ def decode(ids, encoder):
 
 model_name = "transformer"  # モデル
 hparams_set = "transformer_tpu"  # ハイパーパラメータ
-# ckpt_path = 'gs://magentadata/models/music_transformer/checkpoints/melody_conditioned_model_16.ckpt'
-ckpt_path = "/mnt/c/Users/hayat/Desktop/myself/models/transfomer/melody_conditioned_model_16.ckpt"  # チェックポイント
+ckpt_path = "<checkpoint_path>"  # チェックポイント
 
 # エンコーダー生成用のクラス
 class MelodyToPianoPerformanceProblem(score2perf.AbsoluteMelody2PerfProblem):
@@ -80,7 +79,7 @@ predicted = estimator.predict(
 next(predicted)
 
 # MIDIファイルの読み込み
-input_midi_path = "/mnt/c/Users/hayat/Desktop/myself/music_transfomer/result/unconditional_generate_2023_05_04_18_33_12.mid"
+input_midi_path = "<midi_path>"
 
 melody_seq = note_seq.midi_file_to_note_sequence(input_midi_path)
 
@@ -105,5 +104,5 @@ midi_file = decode(
 seq = note_seq.midi_file_to_note_sequence(midi_file)
 
 now = datetime.datetime.now()
-filename = "/mnt/c/Users/hayat/Desktop/myself/music_transfomer/result/accompaniment_" + now.strftime('%Y_%m_%d_%H_%M_%S') + '.mid'
+filename = "result/accompaniment_" + now.strftime('%Y_%m_%d_%H_%M_%S') + '.mid'
 note_seq.sequence_proto_to_midi_file(seq, filename)
